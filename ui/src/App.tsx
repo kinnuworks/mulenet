@@ -94,7 +94,7 @@ export default function App() {
             <img className="app-icon" src="/icon.svg" alt="" /> MuleNet
           </span>
           <span>Built on Midnight · Compact 0.31.1 · Apache-2.0</span>
-          <a href="https://github.com/" className="t-small">Source on GitHub</a>
+          <a href="https://github.com/kinnuworks/mulenet" className="t-small">Source on GitHub</a>
         </div>
       </footer>
     </>

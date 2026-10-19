@@ -6,7 +6,7 @@ Build this in Google Slides, one idea per slide, with large type. Fill in the br
 
 **1. Title**
 MuleNet. Banks stop mule accounts together, without sharing a customer record.
-*Built on Midnight · [team names]*
+*Built on Midnight · [team names] · github.com/kinnuworks/mulenet*
 
 **2. The problem**
 Scam money cashes out through mule accounts spread across many banks. Each bank sees only a fragment.
