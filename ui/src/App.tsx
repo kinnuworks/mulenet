@@ -91,7 +91,7 @@ export default function App() {
       <footer className="footer">
         <div className="container">
           <span className="nav__brand">
-            <img className="app-icon" src="/icon.svg" alt="" /> MuleNet
+            <img className="app-icon" src="icon.svg" alt="" /> MuleNet
           </span>
           <span>Built on Midnight · Compact 0.31.1 · Apache-2.0</span>
           <a href="https://github.com/kinnuworks/mulenet" className="t-small">Source on GitHub</a>
@@ -106,7 +106,7 @@ function Nav({ state }: { state: State }) {
     <header className="nav">
       <div className="nav__bar">
         <a className="nav__brand" href="#top">
-          <img className="app-icon" src="/icon.svg" alt="" /> MuleNet
+          <img className="app-icon" src="icon.svg" alt="" /> MuleNet
         </a>
         <nav className="nav__links" aria-label="Sections">
           <a href="#check">Payee check</a>

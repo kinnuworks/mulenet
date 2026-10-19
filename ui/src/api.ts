@@ -63,7 +63,7 @@ export const getState = async (): Promise<State> => {
       transactions: TxReceipt[];
       rejectedAttempts: Rejection[];
       finalState: Registry;
-    }>(await fetch('/deployment.json'));
+    }>(await fetch('deployment.json'));
     const revoked = new Set(d.transactions.filter((t) => t.circuit === 'revokeBank').map((t) => t.step.replace(/^Regulator revokes /, '')));
     return {
       network: d.network,
