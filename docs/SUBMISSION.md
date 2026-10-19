@@ -14,6 +14,7 @@ Banks flag mule accounts together, without sharing a customer record or revealin
 
 - GitHub: https://github.com/kinnuworks/mulenet (tagged `midnightntwrk`, Apache-2.0)
 - Demo video: https://youtu.be/85G4pWLGQHw
+- Deployed on Midnight Preview: `0be4a304f590d08ddf5e9b53fe0cbf392338307a8c5dcbf46807c2ccc950b38e`
 - Slide deck: [PDF exported from the deck]
 
 ## Description
@@ -30,7 +31,7 @@ All of MuleNet was built during Wave 2:
 
 - A Compact contract (compiler 0.31.1, ledger 8) with 5 circuits: `reportMule`, `retractReport`, `registerBank`, `revokeBank`, `delist`. Private state in `witnesses.ts` holds the bank secret, the consortium key, the regulator secret and a local evidence log.
 - 109 simulator tests, including 11 attack tests and checks that scan each transaction's public transcript for account numbers, bank secrets and bank identities. Mutation testing removes each of the 12 security guards in turn, and the suite catches all 12.
-- A midnight-js integration that runs the full story with real proofs: 16 transactions and 3 rejected attacks on a local Midnight network, recorded in `deployments/standalone.json`.
+- A midnight-js integration that runs the full story with real proofs, deployed on Midnight Preview (contract `0be4a304f590d08ddf5e9b53fe0cbf392338307a8c5dcbf46807c2ccc950b38e`): 16 transactions and 3 rejected attacks, recorded in `deployments/preview.json`.
 - A React console with a UPI-style payee check, a bank desk, regulator appeals, and a view of exactly what the chain stores next to what stays private.
 - README, JUDGES.md (a five-minute evaluation path), a pitch deck and a demo film.
 

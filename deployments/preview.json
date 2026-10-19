@@ -1,0 +1,227 @@
+{
+  "network": "preview",
+  "contractAddress": "0be4a304f590d08ddf5e9b53fe0cbf392338307a8c5dcbf46807c2ccc950b38e",
+  "compiler": "compact 0.31.1 (ledger 8)",
+  "threshold": 3,
+  "banks": [
+    "SBI",
+    "HDFC",
+    "ICICI",
+    "Axis",
+    "Kotak"
+  ],
+  "transactions": [
+    {
+      "step": "Deploy registry",
+      "actor": "regulator",
+      "circuit": "deploy",
+      "txHash": "526d7c1b3283beab8b44f6c9fb26cb55ba91b50d91c83e598966620e3bb8db02",
+      "txId": "009461ac259a27314525999bd7aeb8067f0cb3faacc1b2c98c4167dbe5a597c9b2",
+      "blockHeight": 1365934,
+      "at": "2026-10-19T13:23:20.157Z"
+    },
+    {
+      "step": "Register SBI",
+      "actor": "regulator",
+      "circuit": "registerBank",
+      "txHash": "7efaec16d82cd11baca445178e3a5f890f2637ddc9d35e5fa2346c321dd67b8d",
+      "txId": "000f1eaa5e39d874f0ffc28e1cfe7f9a0729aeaa92a6ec485106421c0aea87e8e9",
+      "blockHeight": 1365938,
+      "at": "2026-10-19T13:23:44.387Z"
+    },
+    {
+      "step": "Register HDFC",
+      "actor": "regulator",
+      "circuit": "registerBank",
+      "txHash": "db6e5375825a80e0ca04af028f67a5187660fac686c0538fe0c78a62489a46d8",
+      "txId": "00e1d623237f80e1c6c9a02579d160fb2b156b2b23bbd512a20444dcb688209f20",
+      "blockHeight": 1365942,
+      "at": "2026-10-19T13:25:25.449Z"
+    },
+    {
+      "step": "Register ICICI",
+      "actor": "regulator",
+      "circuit": "registerBank",
+      "txHash": "484aed7a8cd6dacaa9edbd6cc787890d93e0542b55c6f8a4477137576b200465",
+      "txId": "00842d9d4d5c239fe3c3731d47ad447020a949617a07f5bbec8c8a37fb86b26c21",
+      "blockHeight": 1365958,
+      "at": "2026-10-19T13:25:46.082Z"
+    },
+    {
+      "step": "Register Axis",
+      "actor": "regulator",
+      "circuit": "registerBank",
+      "txHash": "9f8a5c4a1e6507189895e0f25cb25f082b92809a48617a91a4bbbb662568c6e6",
+      "txId": "006d9cae1adee64bc59d1ad0acecfb1a46088f5df1d31746d23ee3394db7a93249",
+      "blockHeight": 1365962,
+      "at": "2026-10-19T13:26:11.000Z"
+    },
+    {
+      "step": "Register Kotak",
+      "actor": "regulator",
+      "circuit": "registerBank",
+      "txHash": "803f0c45e95cee0a48f8c15ff5cf5bbb3b4ac46ea1da4042f2d5051e08b5da4f",
+      "txId": "00e4814c83904841299c75c3cb225fafb1f70bc61a1b278e7530bc2f2a67fd24ae",
+      "blockHeight": 1365966,
+      "at": "2026-10-19T13:26:32.170Z"
+    },
+    {
+      "step": "HDFC reports mule A",
+      "actor": "HDFC",
+      "circuit": "reportMule",
+      "txHash": "3d7d5333fbba7447dca260b52f62584449616c3bcf7f6aefac1c6e7ff65001e6",
+      "txId": "00a93aa6d184fd39c9219fdbf86c73c9fca7e48bc94ae283ec76713af05b6229d4",
+      "blockHeight": 1365970,
+      "at": "2026-10-19T13:26:56.895Z"
+    },
+    {
+      "step": "ICICI reports mule A",
+      "actor": "ICICI",
+      "circuit": "reportMule",
+      "txHash": "3074992ea7b926a253a5761046d2c5b7c31beacdb22360b91d7a1e0cae510afc",
+      "txId": "00e16b961b470f229001239284797c6b88ebf564cfeb672f8bccc00c53c3966c52",
+      "blockHeight": 1365974,
+      "at": "2026-10-19T13:27:20.113Z"
+    },
+    {
+      "step": "Axis reports mule A (threshold reached)",
+      "actor": "Axis",
+      "circuit": "reportMule",
+      "txHash": "f853f364e517ebdfe3a4a2d3e425c4da69bd156f39fee5245c1d352fa3c6ee83",
+      "txId": "0057e554b148d035f361a7aa8c87744839e0fc243872c2f760c27da3a77011a1b8",
+      "blockHeight": 1365978,
+      "at": "2026-10-19T13:27:44.529Z"
+    },
+    {
+      "step": "Kotak reports mule B",
+      "actor": "Kotak",
+      "circuit": "reportMule",
+      "txHash": "6a8316c782a15538fcc7d31376e2a0ac85f2c73235a9db84033f45c708e15b11",
+      "txId": "00092adcdb4f5644b8a0046012bc34fd461de4bac82d0b3d2aae3beff30ff2bc9d",
+      "blockHeight": 1365982,
+      "at": "2026-10-19T13:28:08.844Z"
+    },
+    {
+      "step": "Kotak retracts its report on mule B (merchant festival sales)",
+      "actor": "Kotak",
+      "circuit": "retractReport",
+      "txHash": "d358a769de17fba0e061f2cbf6a5cc4a4c9392222eb1bb2214c1da7df9ed7f6a",
+      "txId": "00d87f743d5c34f69e6c7157e0635fe944121f7c8ac74ff2dc3b205ea6453729ce",
+      "blockHeight": 1365986,
+      "at": "2026-10-19T13:28:32.360Z"
+    },
+    {
+      "step": "SBI reports hijacked account",
+      "actor": "SBI",
+      "circuit": "reportMule",
+      "txHash": "fefdce79347c0c7f28c3d44683e158ba9ce3d0694b492bd0e899b3a8d5352064",
+      "txId": "002d717c6764026c08de677d1abe2e380af1a1def1f6dd5745c600d1ee70fefd44",
+      "blockHeight": 1365990,
+      "at": "2026-10-19T13:28:56.924Z"
+    },
+    {
+      "step": "HDFC reports hijacked account",
+      "actor": "HDFC",
+      "circuit": "reportMule",
+      "txHash": "599d3f5841f6686020a62d69057d3ba518556ef6cadfb1d48269b2f822f08f49",
+      "txId": "00cea451542b7dc0a99f47c1e8ab4907f4504a88da38bccdd937b14979e63a5821",
+      "blockHeight": 1365994,
+      "at": "2026-10-19T13:29:20.116Z"
+    },
+    {
+      "step": "Kotak reports hijacked account (threshold reached)",
+      "actor": "Kotak",
+      "circuit": "reportMule",
+      "txHash": "e5a7bf26fe35403354fadb3b506fc83ebc238e54a64fa3eacccf0cf92d460e5b",
+      "txId": "00e5daf58a4622342213c35ffdfd3a10f356930353e65ecd18fef916a8eef2d14b",
+      "blockHeight": 1365998,
+      "at": "2026-10-19T13:29:44.458Z"
+    },
+    {
+      "step": "Regulator delists hijacked account after appeal",
+      "actor": "regulator",
+      "circuit": "delist",
+      "txHash": "b522c8eb1107b404ae577961b46c0ce3ec3d7f82b90a56d12d1e9444455f46ab",
+      "txId": "00aacb7a3fbd8a8ae1ec09513589593cfea652aaf889db3f7bb0eb8949119924ef",
+      "blockHeight": 1366001,
+      "at": "2026-10-19T13:30:04.982Z"
+    },
+    {
+      "step": "Regulator revokes Kotak",
+      "actor": "regulator",
+      "circuit": "revokeBank",
+      "txHash": "f08ea21b5c5b641949acdd0947446363caac5144326ec378e497d41ace9e1486",
+      "txId": "00717897a862cbcf8a47c2b465826d8cf442aadd8a5dcb9149ce7300cf96c1e3d2",
+      "blockHeight": 1366005,
+      "at": "2026-10-19T13:30:27.122Z"
+    }
+  ],
+  "rejectedAttempts": [
+    {
+      "step": "ICICI reports mule A a second time",
+      "actor": "ICICI",
+      "expected": "already reported this account",
+      "error": "Unexpected error executing scoped transaction '<unnamed>': Error: failed assert: MuleNet: this bank already reported this account"
+    },
+    {
+      "step": "Unlicensed ShadowPay reports mule A",
+      "actor": "ShadowPay",
+      "expected": "membership path is for a different bank",
+      "error": "Unexpected error executing scoped transaction '<unnamed>': Error: failed assert: MuleNet: membership path is for a different bank"
+    },
+    {
+      "step": "Revoked Kotak reports mule B",
+      "actor": "Kotak",
+      "expected": "membership path is for a different bank",
+      "error": "Unexpected error executing scoped transaction '<unnamed>': Error: failed assert: MuleNet: membership path is for a different bank"
+    }
+  ],
+  "offChainChecks": [
+    {
+      "account": "SBIN0001234:00011122233",
+      "flagged": true,
+      "reports": 3
+    },
+    {
+      "account": "ICIC0000777:000401500123",
+      "flagged": false,
+      "reports": 0
+    }
+  ],
+  "finalState": {
+    "contractAddress": "0be4a304f590d08ddf5e9b53fe0cbf392338307a8c5dcbf46807c2ccc950b38e",
+    "threshold": 3,
+    "activeBanks": 4,
+    "bankTreeRoot": "407702907f0b4469858417a97dba39cd55ecce17e20f6ec95a4ef84c29f2d56e",
+    "totalReports": 7,
+    "totalRetracted": 1,
+    "totalDelisted": 1,
+    "flagged": [
+      "0a58f4a65fca6592c813120f3f80003adb255cbca2c11d0b78db41a4b826b850"
+    ],
+    "reportCounts": [
+      {
+        "tag": "136bef2c83110101193fc85980e4135fab3c4427e584f4506136fd3c10e06c8d",
+        "count": 0,
+        "round": 0,
+        "flagged": false
+      },
+      {
+        "tag": "0a58f4a65fca6592c813120f3f80003adb255cbca2c11d0b78db41a4b826b850",
+        "count": 3,
+        "round": 0,
+        "flagged": true
+      },
+      {
+        "tag": "389dfa6df3cf96dc799c881593117290bc73ca69a8cbe3f0c740e90cf5a4d598",
+        "count": 0,
+        "round": 1,
+        "flagged": false
+      }
+    ],
+    "nullifiers": 6,
+    "evidenceCommitments": 7
+  },
+  "startedAt": "2026-10-19T13:23:02.169Z",
+  "finishedAt": "2026-10-19T13:30:27.568Z"
+}
