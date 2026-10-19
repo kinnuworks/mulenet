@@ -1,0 +1,28 @@
+{
+  "name": "mulenet",
+  "version": "0.1.0",
+  "description": "MuleNet: a cross-bank mule-account registry on Midnight",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.11.1"
+  },
+  "workspaces": [
+    "contract"
+  ],
+  "scripts": {
+    "compact": "npm run compact --workspace contract",
+    "build": "npm run build --workspace contract",
+    "test": "npm test --workspace contract"
+  },
+  "dependencies": {
+    "@midnight-ntwrk/midnight-js-network-id": "4.1.1",
+    "@midnight-ntwrk/midnight-js-protocol": "4.1.1",
+    "@midnight-ntwrk/midnight-js-types": "4.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}

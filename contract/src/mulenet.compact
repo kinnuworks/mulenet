@@ -1,0 +1,196 @@
+// MuleNet: a cross-bank mule-account registry on Midnight.
+// SPDX-License-Identifier: Apache-2.0
+//
+// Banks flag fraud "mule" accounts without revealing customer data or which
+// bank filed the report. An account is only flagged once `threshold`
+// independent licensed banks have reported it.
+//
+// What stays private (witnesses / circuit arguments):
+//   - raw account identifiers (IFSC + account number, IBAN, ...)
+//   - the consortium key used to derive account tags
+//   - each bank's secret, and therefore which bank filed a report
+//   - the evidence behind a report
+//
+// What is public (ledger):
+//   - keyed account tags (unlinkable to an account without the consortium key)
+//   - per-tag report counts, current flag status and appeal round
+//   - report nullifiers (stop one bank reporting an account twice, but reveal
+//     nothing about the bank)
+//   - evidence commitments (a bank can later open its own to a regulator)
+//   - the Merkle root of licensed banks and the regulator's public key
+
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+// ---------------------------------------------------------------- ledger --
+
+export ledger regulator: Bytes<32>;
+export ledger consortiumKeyCommitment: Bytes<32>;
+export ledger threshold: Uint<8>;
+
+export ledger banks: HistoricMerkleTree<10, Bytes<32>>;
+export ledger activeBanks: Counter;
+
+export ledger nullifiers: Set<Bytes<32>>;
+export ledger reportCount: Map<Bytes<32>, Uint<16>>;
+export ledger reportRound: Map<Bytes<32>, Uint<16>>;
+export ledger flagged: Set<Bytes<32>>;
+export ledger evidenceCommitments: Set<Bytes<32>>;
+
+export ledger totalReports: Counter;
+export ledger totalRetracted: Counter;
+export ledger totalDelisted: Counter;
+
+// ------------------------------------------------------------- witnesses --
+
+witness regulatorSecret(): Bytes<32>;
+witness bankSecret(): Bytes<32>;
+witness consortiumKey(): Bytes<32>;
+witness bankMembershipPath(leaf: Bytes<32>): MerkleTreePath<10, Bytes<32>>;
+witness evidenceSalt(tag: Bytes<32>, evidenceHash: Bytes<32>): Bytes<32>;
+
+// ----------------------------------------------------------- constructor --
+
+constructor(k: Uint<8>) {
+  assert(k > 0, "MuleNet: threshold must be at least 1");
+  regulator = disclose(regulatorKey(regulatorSecret()));
+  consortiumKeyCommitment = disclose(consortiumKeyCommit(consortiumKey()));
+  threshold = disclose(k);
+}
+
+// ------------------------------------------------- derivations (pure) --
+// Exported so the off-chain API and UI derive exactly the same values.
+
+export circuit regulatorKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "mulenet:regulator"), sk]);
+}
+
+export circuit bankLeaf(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "mulenet:bank"), sk]);
+}
+
+export circuit consortiumKeyCommit(ck: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "mulenet:consortium-key"), ck]);
+}
+
+export circuit accountTag(ck: Bytes<32>, accountId: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "mulenet:account"), ck, accountId]);
+}
+
+export circuit reportNullifier(sk: Bytes<32>, tag: Bytes<32>, round: Uint<16>): Bytes<32> {
+  return persistentHash<Vector<4, Bytes<32>>>(
+    [pad(32, "mulenet:nullifier"), sk, tag, round as Field as Bytes<32>]);
+}
+
+// A bank opens this to a regulator by revealing (tag, evidenceHash, salt).
+export circuit evidenceCommit(tag: Bytes<32>, evidenceHash: Bytes<32>, salt: Bytes<32>): Bytes<32> {
+  return persistentCommit<Vector<2, Bytes<32>>>([tag, evidenceHash], salt);
+}
+
+// --------------------------------------------------------------- helpers --
+
+circuit assertRegulator(): [] {
+  assert(regulator == regulatorKey(regulatorSecret()), "MuleNet: caller is not the regulator");
+}
+
+// Proves the caller holds the consortium key and returns it.
+circuit provenConsortiumKey(): Bytes<32> {
+  const ck = consortiumKey();
+  assert(consortiumKeyCommit(ck) == consortiumKeyCommitment, "MuleNet: wrong consortium key");
+  return ck;
+}
+
+// Proves the caller is a licensed bank without revealing which one.
+// Returns the bank secret for nullifier derivation.
+circuit provenBankSecret(): Bytes<32> {
+  const sk = bankSecret();
+  const leaf = bankLeaf(sk);
+  const path = bankMembershipPath(leaf);
+  assert(path.leaf == leaf, "MuleNet: membership path is for a different bank");
+  assert(banks.checkRoot(disclose(merkleTreePathRoot<10, Bytes<32>>(path))),
+         "MuleNet: not a licensed bank");
+  return sk;
+}
+
+circuit currentRound(tag: Bytes<32>): Uint<16> {
+  return reportRound.member(tag) ? reportRound.lookup(tag) : 0 as Uint<16>;
+}
+
+circuit currentCount(tag: Bytes<32>): Uint<16> {
+  return reportCount.member(tag) ? reportCount.lookup(tag) : 0 as Uint<16>;
+}
+
+// -------------------------------------------------- regulator circuits --
+
+export circuit registerBank(leaf: Bytes<32>): [] {
+  assertRegulator();
+  assert(!banks.isFull(), "MuleNet: bank registry is full");
+  banks.insert(disclose(leaf));
+  activeBanks.increment(1);
+}
+
+// Removes a bank's leaf and forgets old roots, so the revoked bank can no
+// longer produce a valid membership proof.
+export circuit revokeBank(index: Uint<64>): [] {
+  assertRegulator();
+  assert(!activeBanks.lessThan(1), "MuleNet: no active banks");
+  banks.insertIndexDefault(disclose(index));
+  banks.resetHistory();
+  activeBanks.decrement(1);
+}
+
+// Appeal upheld: clear the account and open a fresh round, so banks may
+// report it again only with new evidence.
+export circuit delist(tag: Bytes<32>): [] {
+  assertRegulator();
+  const t = disclose(tag);
+  assert(currentCount(t) > 0, "MuleNet: account has no reports");
+  reportRound.insert(t, (currentRound(t) + 1) as Uint<16>);
+  reportCount.insert(t, 0);
+  if (flagged.member(t)) {
+    flagged.remove(t);
+  }
+  totalDelisted.increment(1);
+}
+
+// ------------------------------------------------------- bank circuits --
+
+export circuit reportMule(accountId: Bytes<32>, evidenceHash: Bytes<32>): [] {
+  const ck = provenConsortiumKey();
+  const sk = provenBankSecret();
+
+  const tag = disclose(accountTag(ck, accountId));
+  const nul = disclose(reportNullifier(sk, tag, currentRound(tag)));
+  assert(!nullifiers.member(nul), "MuleNet: this bank already reported this account");
+  nullifiers.insert(nul);
+
+  const count = (currentCount(tag) + 1) as Uint<16>;
+  reportCount.insert(tag, count);
+  if (count >= threshold) {
+    flagged.insert(tag);
+  }
+
+  const salt = evidenceSalt(tag, evidenceHash);
+  evidenceCommitments.insert(disclose(evidenceCommit(tag, evidenceHash, salt)));
+  totalReports.increment(1);
+}
+
+// A bank withdraws its own report (e.g. false positive) without revealing
+// which of the reports was its.
+export circuit retractReport(accountId: Bytes<32>): [] {
+  const ck = provenConsortiumKey();
+  const sk = provenBankSecret();
+
+  const tag = disclose(accountTag(ck, accountId));
+  const nul = disclose(reportNullifier(sk, tag, currentRound(tag)));
+  assert(nullifiers.member(nul), "MuleNet: no report from this bank to retract");
+  nullifiers.remove(nul);
+
+  const count = (currentCount(tag) - 1) as Uint<16>;
+  reportCount.insert(tag, count);
+  if (count < threshold && flagged.member(tag)) {
+    flagged.remove(tag);
+  }
+  totalRetracted.increment(1);
+}
