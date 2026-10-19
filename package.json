@@ -9,20 +9,50 @@
     "node": ">=24.11.1"
   },
   "workspaces": [
-    "contract"
+    "contract",
+    "cli",
+    "ui"
   ],
   "scripts": {
     "compact": "npm run compact --workspace contract",
-    "build": "npm run build --workspace contract",
-    "test": "npm test --workspace contract"
+    "test": "npm test --workspace contract",
+    "mutation": "./scripts/mutation-test.sh",
+    "story:standalone": "npm run story:standalone --workspace cli",
+    "story:preview": "npm run story:preview --workspace cli",
+    "story:preprod": "npm run story:preprod --workspace cli",
+    "serve:standalone": "npm run serve:standalone --workspace cli",
+    "serve:preprod": "npm run serve:preprod --workspace cli",
+    "ui:dev": "npm run dev --workspace ui",
+    "ui:build": "npm run build --workspace ui"
   },
   "dependencies": {
+    "@midnight-ntwrk/dapp-connector-api": "4.0.1",
+    "@midnight-ntwrk/midnight-js-contracts": "4.1.1",
+    "@midnight-ntwrk/midnight-js-fetch-zk-config-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "4.1.1",
     "@midnight-ntwrk/midnight-js-network-id": "4.1.1",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "4.1.1",
     "@midnight-ntwrk/midnight-js-protocol": "4.1.1",
-    "@midnight-ntwrk/midnight-js-types": "4.1.1"
+    "@midnight-ntwrk/midnight-js-types": "4.1.1",
+    "@midnight-ntwrk/midnight-js-utils": "4.1.1",
+    "@midnight-ntwrk/testkit-js": "4.1.1",
+    "@midnight-ntwrk/wallet-sdk": "1.2.0",
+    "pino": "^10.3.1",
+    "pino-pretty": "^13.1.3",
+    "rxjs": "^7.8.2",
+    "testcontainers": "^12.0.1",
+    "ws": "^8.21.1"
   },
   "devDependencies": {
+    "@types/node": "^25.3.0",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
+  },
+  "overrides": {
+    "@midnight-ntwrk/wallet-sdk": "1.2.0"
   }
 }

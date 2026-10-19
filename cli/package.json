@@ -1,0 +1,16 @@
+{
+  "name": "@mulenet/cli",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "story:standalone": "tsx src/launcher/story.ts standalone",
+    "story:preview": "tsx src/launcher/story.ts preview",
+    "story:preprod": "tsx src/launcher/story.ts preprod",
+    "serve:standalone": "tsx src/launcher/serve.ts standalone",
+    "serve:preview": "tsx src/launcher/serve.ts preview",
+    "serve:preprod": "tsx src/launcher/serve.ts preprod"
+  }
+}

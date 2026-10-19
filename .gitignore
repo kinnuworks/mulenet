@@ -62,3 +62,7 @@ managed/
 
 .claude
 .midnight-expert
+# MuleNet
+.secrets/
+logs/
+mulenet-*-private-state*
