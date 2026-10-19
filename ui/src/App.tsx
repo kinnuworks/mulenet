@@ -209,7 +209,7 @@ function PayeeCheck({ live, learn }: { live: boolean; learn: (t: string, a: stri
                 </button>
               ))}
             </div>
-            <button className="btn btn-ink pay__btn" onClick={() => run()} disabled={busy || !live}>
+            <button className="btn btn-candy pay__btn" onClick={() => run()} disabled={busy || !live}>
               {busy ? 'Checking…' : 'Check payee & pay'}
             </button>
             {!live && <p className="t-micro">Start the MuleNet service to run live checks.</p>}
@@ -296,7 +296,7 @@ function BankDesk({ state, onDone, learn }: { state: State; onDone: () => void; 
             <textarea rows={2} value={evidence} onChange={(e) => setEvidence(e.target.value)} />
           </label>
           <div className="row">
-            <button className="btn btn-ink btn-sm" onClick={() => act('report')} disabled={!!busy || !state.live}>
+            <button className="btn btn-candy btn-sm" onClick={() => act('report')} disabled={!!busy || !state.live}>
               {busy === 'report' ? 'Proving…' : 'Report mule'}
             </button>
             <button className="btn btn-outline btn-sm" onClick={() => act('retract')} disabled={!!busy || !state.live}>
