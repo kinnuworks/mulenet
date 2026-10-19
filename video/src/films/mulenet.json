@@ -192,7 +192,8 @@
        "flyAt": 3.0,
        "landAt": 4.2,
        "toY": 500,
-       "toScale": 0.2
+       "toScale": 0.2,
+       "kicker": "Every country has mule accounts. |This one is in India."
       }
      }
     ],
@@ -1481,7 +1482,8 @@
     "mark": 0.3,
     "line": 3,
     "roll": 4.6,
-    "url": 9,
+    "url": 8.2,
+    "sub": 9.4,
     "click": 11.5
    },
    "props": {
@@ -1496,7 +1498,8 @@
     "url": "github.com/kinnuworks/mulenet",
     "cta": "Built on Midnight",
     "look": "neon",
-    "scale": 1.5
+    "scale": 1.5,
+    "sub": "Any account format: *UPI, IBAN, ACH.*"
    }
   }
  ]

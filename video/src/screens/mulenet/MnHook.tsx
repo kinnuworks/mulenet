@@ -6,9 +6,9 @@ import {EASE, tween, clamp01} from '../../lib/motion';
 import {ScreenProps} from '../types';
 import {M, tb, lerp} from './shared';
 
-type P = ScreenProps & {flyAt?: number; landAt?: number; toY?: number; toScale?: number};
+type P = ScreenProps & {flyAt?: number; landAt?: number; toY?: number; toScale?: number; kicker?: string};
 
-export const MnHook: React.FC<P> = ({f, b, flyAt = 3.0, landAt = 4.2, toY = 478, toScale = 0.205}) => {
+export const MnHook: React.FC<P> = ({f, b, flyAt = 3.0, landAt = 4.2, toY = 478, toScale = 0.205, kicker}) => {
   const fly = tb(f, b, flyAt, landAt, EASE.move);
   const breathe = tween(f, 0, b(flyAt), 1, 1.035, EASE.sine);
   const sc = lerp(breathe, toScale, fly);
@@ -40,6 +40,13 @@ export const MnHook: React.FC<P> = ({f, b, flyAt = 3.0, landAt = 4.2, toY = 478,
       >
         ₹48,000
       </div>
+      {kicker ? (
+        <div style={{position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: M.sans, fontSize: 46, fontWeight: 600, letterSpacing: '-0.02em', color: M.ink, opacity: 1 - tb(f, b, flyAt - 0.5, flyAt)}}>
+          {kicker.split('|').map((part, i) => (
+            <span key={i} style={{color: i === 1 ? M.amber : M.ink}}>{part}</span>
+          ))}
+        </div>
+      ) : null}
       <div style={{position: 'absolute', left: 0, right: 0, top: 700, textAlign: 'center', fontFamily: M.mono, fontSize: 26, letterSpacing: '0.18em', textTransform: 'uppercase', color: M.muted, opacity: (1 - tb(f, b, flyAt - 0.6, flyAt)) * tb(f, b, 0.8, 1.6)}}>
         a fake KYC call · one UPI payment
       </div>

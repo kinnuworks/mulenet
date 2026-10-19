@@ -29,7 +29,7 @@ export const MnDesk: React.FC<P> = ({f, b, fps, typeAt = 1, clickAt = 6, doneAt 
           </div>
         ))}
       </div>
-      <div style={{marginTop: 28, fontSize: 16, color: M.uiInk3}}>Account (IFSC : number)</div>
+      <div style={{marginTop: 28, fontSize: 16, color: M.uiInk3}}>Account (IFSC, IBAN or any local ID)</div>
       <div style={{marginTop: 8, height: 58, borderRadius: 12, boxShadow: `inset 0 0 0 1px rgba(0,0,0,0.14)`, display: 'flex', alignItems: 'center', padding: '0 18px', fontFamily: M.mono, fontSize: 24}}>
         <TypeText f={f} text="SBIN0001234:00011122233" at={b(typeAt)} cps={20} caretColor={M.uiInk} />
       </div>

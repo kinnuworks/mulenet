@@ -12,7 +12,7 @@ import {Roll} from '../components/Extras';
 import {Cursor} from '../components/UI';
 import {withAlpha} from '../lib/scene';
 
-export const Outro: React.FC<{name: string; markSvg?: string; line: string; roll?: string[]; url: string; cta?: string; look?: 'soft' | 'neon' | 'flat'; scale?: number}> = ({name, markSvg, line, roll = [], url, cta, look, scale = 1}) => {
+export const Outro: React.FC<{name: string; markSvg?: string; line: string; roll?: string[]; url: string; cta?: string; look?: 'soft' | 'neon' | 'flat'; scale?: number; sub?: string}> = ({name, markSvg, line, roll = [], url, cta, look, scale = 1, sub}) => {
   const {f, ev, brand, tone, dur} = useScene();
   const {fps} = useVideoConfig();
   const L = useLayout();
@@ -26,6 +26,7 @@ export const Outro: React.FC<{name: string; markSvg?: string; line: string; roll
   const rollAt = ev('roll', 2);
   const urlAt = ev('url', 3.5);
   const clickAt = ev('click', 4.5);
+  const subAt = ev('sub', 6);
   const pop = sp(f, markAt, fps, 0.6, 2.2);
   const pill = clamp01(tween(f, urlAt, urlAt + ms(fps, 450), 0, 1, EASE.premium));
   const press = keys(f, [[clickAt - 3, 1], [clickAt, 0.93, EASE.premium], [clickAt + 9, 1, EASE.premium]]);
@@ -77,6 +78,11 @@ export const Outro: React.FC<{name: string; markSvg?: string; line: string; roll
         <span style={{opacity: cta ? 0.75 : 1, fontWeight: cta ? 500 : 650}}>{url}</span>
         <span style={{fontSize: 26}}>→</span>
       </div>
+      {sub ? (
+        <div style={{position: 'absolute', left: 0, right: 0, top: pillY + 96 * scale, display: 'flex', justifyContent: 'center', fontSize: 30 * scale, fontWeight: 500, letterSpacing: '-0.01em', color: withAlpha(ink, 0.78), whiteSpace: 'nowrap'}}>
+          <BlurWords f={f} text={sub} at={subAt} effect={lk === 'neon' ? 'rise' : 'blur'} />
+        </div>
+      ) : null}
       <Cursor
         f={f}
         path={[

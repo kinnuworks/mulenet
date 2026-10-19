@@ -54,7 +54,8 @@ scenes.append({
         ],
         "overlays": [
             {"id": "hookText", "screen": "MnHook", "chrome": "none", "x": 0, "y": 0, "w": 1920, "h": 1080, "to": 4.6, "exit": "none",
-             "props": {"flyAt": 3.0, "landAt": 4.2, "toY": 500, "toScale": 0.2}},
+             "props": {"flyAt": 3.0, "landAt": 4.2, "toY": 500, "toScale": 0.2,
+                       "kicker": "Every country has mule accounts. |This one is in India."}},
         ],
         "shots": [
             {"at": 0, "x": 0, "y": 20, "zoom": 1.0},
@@ -338,9 +339,10 @@ scenes.append({
 v(17, "outro", 1.0)
 scenes.append({
     "id": "outro", "type": "Outro", "beats": 16, "in": {"type": "blur"}, "music": "out",
-    "events": {"mark": 0.3, "line": 3, "roll": 4.6, "url": 9, "click": 11.5},
+    "events": {"mark": 0.3, "line": 3, "roll": 4.6, "url": 8.2, "sub": 9.4, "click": 11.5},
     "props": {"name": "MuleNet", "markSvg": MARK_SVG, "line": "Stop paying mule accounts", "roll": ["alone.", "blind.", "*together.*"],
-              "url": "github.com/kinnuworks/mulenet", "cta": "Built on Midnight", "look": "neon", "scale": 1.5},
+              "url": "github.com/kinnuworks/mulenet", "cta": "Built on Midnight", "look": "neon", "scale": 1.5,
+              "sub": "Any account format: *UPI, IBAN, ACH.*"},
 })
 
 # camera moves can't overlap: a shot that starts before the previous one ends gets delayed

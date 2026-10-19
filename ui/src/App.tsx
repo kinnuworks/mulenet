@@ -130,7 +130,7 @@ function Hero({ state, learn }: { state: State; learn: (t: string, a: string) =>
       <div className="container">
         <div>
           <span className="eyebrow">
-            <Icon d={I.shield} size={14} /> Cross-bank fraud registry on Midnight
+            <Icon d={I.shield} size={14} /> Cross-bank fraud registry on Midnight · India pilot, any country
           </span>
           <h1 className="hero-title">
             Stop paying mule accounts. <span className="t-muted">Share no customer data.</span>
@@ -198,7 +198,7 @@ function PayeeCheck({ live, learn }: { live: boolean; learn: (t: string, a: stri
           <div className="phone__body pay">
             <p className="pay__title">Pay to bank account</p>
             <label className="field">
-              <span>Payee IFSC : account</span>
+              <span>Payee account (IFSC, IBAN or any local ID)</span>
               <input value={account} onChange={(e) => setAccount(e.target.value)} spellCheck={false} />
             </label>
             <div className="pay__amount t-mono">₹ 48,000</div>
@@ -288,7 +288,7 @@ function BankDesk({ state, onDone, learn }: { state: State; onDone: () => void; 
             ))}
           </div>
           <label className="field">
-            <span>Account (IFSC : number)</span>
+            <span>Account (IFSC, IBAN or any local ID)</span>
             <input value={account} onChange={(e) => setAccount(e.target.value)} spellCheck={false} />
           </label>
           <label className="field">
