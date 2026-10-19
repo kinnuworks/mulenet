@@ -2,6 +2,8 @@
 
 MuleNet is a shared registry of mule accounts for banks, built on Midnight. Banks flag fraud mule accounts together without sharing customer records, and a report never reveals which bank filed it. An account is flagged only after *k* independent licensed banks report it.
 
+Demo video: https://youtu.be/85G4pWLGQHw
+
 Built for the Midnight Buildathon with Compact `0.31.1` (ledger 8, so it deploys to Preview, Preprod and Mainnet) and midnight-js `4.1.1`.
 
 ## The problem

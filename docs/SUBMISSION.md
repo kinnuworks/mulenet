@@ -13,7 +13,7 @@ Banks flag mule accounts together, without sharing a customer record or revealin
 ## Links
 
 - GitHub: https://github.com/kinnuworks/mulenet (tagged `midnightntwrk`, Apache-2.0)
-- Demo video: [YouTube link after upload]
+- Demo video: https://youtu.be/85G4pWLGQHw
 - Slide deck: [PDF exported from the deck]
 
 ## Description
